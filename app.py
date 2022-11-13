@@ -43,3 +43,25 @@ def pet_form():
 def detail_page(pet_id):
     pet = Pet.query.get_or_404(pet_id)
     return render_template("details.html", pet=pet)
+
+
+@app.route("/<int:pet_id>/edit", methods=["GET", "POST"])
+def edit_pet(pet_id):
+    form = AddPetForm()
+    pet = Pet.query.get_or_404(pet_id)
+    if form.validate_on_submit():
+        pet.photo_url = form.photo_url.data
+        pet.notes = form.notes.data
+        pet.available = form.available.data
+        db.session.commit()
+        return redirect("/pet.id")
+    else:
+        return render_template("edit-form.html", form=form)
+
+
+@app.route("/<int:pet_id>/delete", methods=["POST"])
+def delete_pet(pet_id):
+    pet = Pet.query.get_or_404(pet_id)
+    db.session.delete(pet)
+    db.session.commit()
+    return redirect("/")
