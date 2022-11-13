@@ -1,5 +1,16 @@
 {% extends 'base.html' %}
 {% block title %}{{pet.name}}{% endblock %}
 {% block content %}
-
-{% endblock %}
+<img class="photo" src="{{pet.photo_url}}" alt="pet.name">
+<h1>Hello, my name is {{pet.name}}. I am a {{pet.species}}</h3>
+    <h1>I am {{pet.age}} years old</h1>
+    <form action="/">
+        <button>Cancel</button>
+    </form>
+    <form action="/{{pet.id}}/edit">
+        <button>Edit</button>
+    </form>
+    <form action="/{{pet.id}}/delete" method="post">
+        <button>Delete</button>
+    </form>
+    {% endblock %}
