@@ -7,11 +7,11 @@
 <img src="{{pet.photo_url}}" alt="{{pet.name}}">
 {% if pet.available %}
 <p>
-    {{pet.name}} is <b><em>Available</em></b>
+    <a href="/{{pet.id}}">{{pet.name}}</a> is <b><em>Available</em></b>
 </p>
 {% else %}
 <p>
-    {{pet.name}} is <b><em>Not Available</em></b>
+    <a href="/{{pet.id}}">{{pet.name}}</a> is <b><em>Not Available</em></b>
 </p>
 {% endif %}
 {% endfor %}
