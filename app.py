@@ -8,7 +8,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///agency'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['SECRET_KEY'] = "secret"
-# app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 debug = DebugToolbarExtension(app)
 
 connect_db(app)
@@ -50,11 +50,14 @@ def edit_pet(pet_id):
     pet = Pet.query.get_or_404(pet_id)
     form = AddPetForm(obj=pet)
     if form.validate_on_submit():
+        pet.name = form.name.data
+        pet.species = form.species.data
         pet.photo_url = form.photo_url.data
+        pet.age = form.age.data
         pet.notes = form.notes.data
         pet.available = form.available.data
         db.session.commit()
-        return redirect("/pet.id")
+        return redirect(f"/{pet.id}")
     else:
         return render_template("edit-form.html", form=form)
 
